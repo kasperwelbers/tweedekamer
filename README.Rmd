@@ -1,0 +1,86 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# tweedekamer
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This package provides bindings for using the [Open Data API of the Dutch House of Representatives](https://opendata.tweedekamer.nl/documentatie/odata-api)
+
+## basic example code
+
+## Installation
+
+You can install the development version of tweedekamer from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("kasperwelbers/tweedekamer")
+```
+
+## Example
+
+List entities that can be queried
+
+```{r}
+library(tweedekamer)
+
+tk_entities()
+```
+
+Count items for an entity
+
+```{r example}
+tk_entity('persoon') |>
+  tk_count()
+```
+
+Filter results
+
+```{r}
+tk_entity('persoon') |>
+  tk_filter(
+    tk_string_filter('geslacht', 'eq', 'vrouw')
+  ) |>
+  tk_count()
+```
+
+Download results
+
+```{r}
+data = tk_entity('persoon') |>
+  tk_filter(
+    tk_string_filter('geslacht', 'eq', 'vrouw')
+  ) |>
+  tk_list()
+
+nrow(data)
+```
+
+Fancy filters
+
+```{r}
+tk_entity('persoon') |>
+  tk_filter(
+    tk_string_filter('geslacht', 'eq', 'vrouw'),
+    tk_or(
+      tk_date_filter('geboortedatum', 'lt', '1970-01-01T23:00:00Z'),
+      tk_date_filter('geboortedatum', 'gt', '1980-01-01')
+    )
+  ) |>
+  tk_count()
+```
+

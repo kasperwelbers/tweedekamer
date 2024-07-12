@@ -14,3 +14,18 @@ tk_filter(tk_url, ...)
 \description{
 Add a filter
 }
+\examples{
+tk_entity('persoon') \%>\%
+  tk_filter(tk_string_filter('geslacht', 'eq', 'vrouw')) \%>\%
+  tk_count()
+
+tk_entity('persoon') \%>\%
+  tk_filter(
+    tk_string_filter('geslacht', 'eq', 'vrouw'),
+    tk_or(
+      tk_date_filter('geboortedatum', 'lt', '1970-01-01T23:00:00Z'),
+      tk_date_filter('geboortedatum', 'gt', '1980-01-01')
+    )
+  ) \%>\%
+  tk_count()
+}

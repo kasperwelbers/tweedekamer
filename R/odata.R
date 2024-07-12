@@ -1,6 +1,6 @@
 
 .onLoad <- function(libname, pkgname) {
-  tk_entities <- memoized_get_entities()
+  tk_entities <<- memoized_get_entities()
 }
 
 memoized_get_entities <- function() {
@@ -17,6 +17,8 @@ memoized_get_entities <- function() {
     cache
   }
 }
+
+
 
 #' Select entity
 #'
@@ -124,6 +126,19 @@ tk_list <- function(tk_url, top=NULL, skip=NULL) {
 #' @export
 #'
 #' @examples
+#' tk_entity('persoon') %>%
+#'   tk_filter(tk_string_filter('geslacht', 'eq', 'vrouw')) %>%
+#'   tk_count()
+#'
+#' tk_entity('persoon') %>%
+#'   tk_filter(
+#'     tk_string_filter('geslacht', 'eq', 'vrouw'),
+#'     tk_or(
+#'       tk_date_filter('geboortedatum', 'lt', '1970-01-01T23:00:00Z'),
+#'       tk_date_filter('geboortedatum', 'gt', '1980-01-01')
+#'     )
+#'   ) %>%
+#'   tk_count()
 tk_filter <- function(tk_url, ...) {
   filter = paste(list(...), collapse=' and ')
   if ('?' %in% tk_url) {
@@ -222,25 +237,5 @@ tk_and <- function(...) {
 #' @examples
 tk_or <- function(...) {
   paste0('(', paste(list(...), collapse=' or '),')')
-}
-
-function()  {
-test = tk_entity('persoon') %>%
-  tk_list()
-
-nrow(test)
-tk_entity('persoon') %>%
-  tk_count()
-test$`@odata.count`
-
-tk_entity('persoon') %>%
-  tk_filter(
-    tk_string_filter('geslacht', 'eq', 'vrouw'),
-    tk_or(
-      tk_date_filter('geboortedatum', 'lt', '1970-01-01T23:00:00Z'),
-      tk_date_filter('geboortedatum', 'gt', '1980-01-01')
-    )
-  ) %>%
-  tk_count()
 }
 
