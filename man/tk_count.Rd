@@ -7,7 +7,7 @@
 tk_count(tk_url)
 }
 \arguments{
-\item{tk_url}{}
+\item{tk_url}{A tk_url_builder object}
 }
 \value{
 a number

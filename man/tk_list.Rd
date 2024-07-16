@@ -4,14 +4,22 @@
 \alias{tk_list}
 \title{Get list of results for query}
 \usage{
-tk_list(tk_url, top = NULL, skip = NULL)
+tk_list(
+  tk_url,
+  limit = Inf,
+  skip = NULL,
+  meta = "minimal",
+  expand_notnull = TRUE
+)
 }
 \arguments{
-\item{tk_url}{A tk_url object}
+\item{tk_url}{A tk_url_builder object (the output of tk_entity)}
 
-\item{top}{Maximum number of results to return. Maximum is 250.}
+\item{limit}{Number of results to return.}
 
 \item{skip}{Number of results to skip.}
+
+\item{meta}{Either 'none', 'minimal' or 'full'}
 }
 \value{
 A tibble with the results

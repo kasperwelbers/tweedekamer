@@ -7,24 +7,24 @@
 tk_filter(tk_url, ...)
 }
 \arguments{
-\item{tk_url}{A tk_url object}
+\item{tk_url}{A tk_url_builder object (the output of tk_entity)}
 
-\item{...}{Filters to apply. Use tk_string_filter, tk_date_filter, tk_number_filter, tk_boolean_filter, tk_and, tk_or}
+\item{...}{Filters to apply. Use by_string, by_date, by_number, by_boolean, filter_and, filter_or}
 }
 \description{
 Add a filter
 }
 \examples{
 tk_entity('persoon') \%>\%
-  tk_filter(tk_string_filter('geslacht', 'eq', 'vrouw')) \%>\%
+  tk_filter(by_string('geslacht', 'eq', 'vrouw')) \%>\%
   tk_count()
 
 tk_entity('persoon') \%>\%
   tk_filter(
-    tk_string_filter('geslacht', 'eq', 'vrouw'),
-    tk_or(
-      tk_date_filter('geboortedatum', 'lt', '1970-01-01T23:00:00Z'),
-      tk_date_filter('geboortedatum', 'gt', '1980-01-01')
+    by_string('geslacht', 'eq', 'vrouw'),
+    filter_or(
+      by_date('geboortedatum', 'lt', '1970-01-01T23:00:00Z'),
+      by_date('geboortedatum', 'gt', '1980-01-01')
     )
   ) \%>\%
   tk_count()

@@ -15,4 +15,6 @@ Imports:
     httr2,
     magrittr,
     progress,
-    tibble
+    xml2,
+    tibble,
+    memoise
